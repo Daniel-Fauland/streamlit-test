@@ -17,6 +17,7 @@ def get_wikipedia_content(url, country_flag):
 
 
 def askGPT(kwargs):
+    print("Inside GPT func")
     simplify = ""
     if kwargs["simplify"] == "yes":
         simplify = ". Explain it in a way so that a child can understand it. "
@@ -55,10 +56,11 @@ def handle_button_click(input):
         output_price = st.text(f"Cost for completing the task: {round(cost, 4)}$")
         output_msg = st.text_area("GPT result", value=result_msg, height=350)
         st.markdown("---")
+    st.session_state.prompt = ""
 
 
 def handle_wiki_click():
-    url = wiki_prompt
+    url = prompt
     if "de.wikipedia.org" in url:
         country_flag = "de"
     else:
@@ -103,7 +105,9 @@ if api_key:
         )
         language = st.radio("Select Output language", options=("German", "English"))
         prompt = st.text_area("Enter any text to summarize", value="", height=150)
-        start_btn = st.button("Start", on_click=handle_button_click(prompt))
+        # start_btn = st.button("Start", on_click=handle_button_click(prompt))
+        if st.button("Start"):
+            handle_button_click(prompt)
     elif mode == "Wikipedia URL":
         length = st.select_slider(
             "Choose the length of the summary",
@@ -115,5 +119,7 @@ if api_key:
             options=("No", "Yes"),
         )
         language = st.radio("Select Output language", options=("German", "English"))
-        wiki_prompt = st.text_input("Enter any wikipedia URL", value="")
-        start_btn = st.button("Start", on_click=handle_wiki_click)
+        prompt = st.text_input("Enter any wikipedia URL", value="")
+        # start_btn = st.button("Start", on_click=handle_wiki_click)
+        if st.button("Start"):
+            handle_wiki_click()
