@@ -24,7 +24,7 @@ def askGPT(kwargs):
         prompt = f"Translate the following text to german while also giving a {kwargs['length']} summary of the translation{simplify}Only return the summarized translation:\n{kwargs['prompt']}"
     if kwargs["language"] == "English":
         prompt = f"Give a {kwargs['length']} summary of the following text{simplify}:\n{kwargs['prompt']}"
-    openai.api_key = "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"
+    openai.api_key = api_key
 
     prompt = prompt.strip()
     completion = openai.ChatCompletion.create(
@@ -69,47 +69,51 @@ def handle_wiki_click():
 
 
 st.set_page_config(page_title="GPT-Summarizer")
-st.title("Summarize and translate your texts using GPT 3.5")
+input_placeholder = st.empty()
+api_key = input_placeholder.text_input("Set your OpenAI API key:")
+if api_key:
+    input_placeholder.empty()
+    st.title("Summarize and translate your texts using GPT 3.5")
 
-st.markdown(
-    """
-<style>
-.css-h5rgaw.ea3mdgi1
-{
-    visibility: hidden;
-}         
-</style>
-""",
-    unsafe_allow_html=True,
-)
+    st.markdown(
+        """
+    <style>
+    .css-h5rgaw.ea3mdgi1
+    {
+        visibility: hidden;
+    }         
+    </style>
+    """,
+        unsafe_allow_html=True,
+    )
 
-mode = st.selectbox(
-    "Choose your preferred way of input", options=("Manual input", "Wikipedia URL")
-)
+    mode = st.selectbox(
+        "Choose your preferred way of input", options=("Manual input", "Wikipedia URL")
+    )
 
-if mode == "Manual input":
-    length = st.select_slider(
-        "Choose the length of the summary",
-        options=["Very short", "short", "detailed", "very detailed"],
-        value=("short"),
-    )
-    simplify = st.radio(
-        "Simplify the output to make it more accessible for children",
-        options=("No", "Yes"),
-    )
-    language = st.radio("Select Output language", options=("German", "English"))
-    prompt = st.text_area("Enter any text to summarize", value="", height=150)
-    start_btn = st.button("Start", on_click=handle_button_click(prompt))
-elif mode == "Wikipedia URL":
-    length = st.select_slider(
-        "Choose the length of the summary",
-        options=["Very short", "short", "detailed", "very detailed"],
-        value=("short"),
-    )
-    simplify = st.radio(
-        "Simplify the output to make it more accessible for children",
-        options=("No", "Yes"),
-    )
-    language = st.radio("Select Output language", options=("German", "English"))
-    wiki_prompt = st.text_input("Enter any wikipedia URL", value="")
-    start_btn = st.button("Start", on_click=handle_wiki_click)
+    if mode == "Manual input":
+        length = st.select_slider(
+            "Choose the length of the summary",
+            options=["Very short", "short", "detailed", "very detailed"],
+            value=("short"),
+        )
+        simplify = st.radio(
+            "Simplify the output to make it more accessible for children",
+            options=("No", "Yes"),
+        )
+        language = st.radio("Select Output language", options=("German", "English"))
+        prompt = st.text_area("Enter any text to summarize", value="", height=150)
+        start_btn = st.button("Start", on_click=handle_button_click(prompt))
+    elif mode == "Wikipedia URL":
+        length = st.select_slider(
+            "Choose the length of the summary",
+            options=["Very short", "short", "detailed", "very detailed"],
+            value=("short"),
+        )
+        simplify = st.radio(
+            "Simplify the output to make it more accessible for children",
+            options=("No", "Yes"),
+        )
+        language = st.radio("Select Output language", options=("German", "English"))
+        wiki_prompt = st.text_input("Enter any wikipedia URL", value="")
+        start_btn = st.button("Start", on_click=handle_wiki_click)
