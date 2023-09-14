@@ -102,7 +102,7 @@ def ocr_text_from_file(file, start, end, lang="deu"):
 
 
 def handle_button_click(input):
-    if len(input) > 5:
+    if len(input) > 3:
         result = ask_gpt(
             {
                 "prompt": input,

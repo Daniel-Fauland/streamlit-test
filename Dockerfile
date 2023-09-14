@@ -13,8 +13,17 @@ RUN pip install -r requirements.txt
 RUN apt-get update -qqy && apt-get install -qqy \
         tesseract-ocr \
         libtesseract-dev \
-        poppler-utils
-        
+        poppler-utils \
+        ffmpeg \
+        libsm6 \
+        libxext6
+
+# Download and install German language data
+RUN curl -LO https://github.com/tesseract-ocr/tessdata/raw/main/deu.traineddata && \
+    mkdir -p /usr/share/tesseract-ocr/5/tessdata/ && \
+    mv deu.traineddata /usr/share/tesseract-ocr/5/tessdata/
+
+RUN export TESSDATA_PREFIX=/usr/share/tesseract-ocr/5/
 
 HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
 

@@ -14,7 +14,9 @@
   streamlit run app.py
   ```
 
-- Note: This app uses "tesseract" for OCR. You need to [install the executable](https://tesseract-ocr.github.io/tessdoc/Installation.html) as well as the python package in order to run it successfully.
+- **Note:** This app uses "tesseract" for OCR. You need to [install the executable](https://tesseract-ocr.github.io/tessdoc/Installation.html) as well as the python package in order to run it successfully.
+
+- **Note:** In order to convert a PDF to an image with "image2pdf" before sending it to tesseract you also need to [install poppler](https://pdf2image.readthedocs.io/en/latest/installation.html) which can not be installed with pip
 
 ## Dockerize application
 
@@ -33,9 +35,12 @@
   ```
 
 - Run the docker container (optional)
+
   ```shell
   docker run -p 8080:8080 my-streamlit-app
   ```
+
+  **Note:** If you want to run the docker container locally on an Apple silicon Mac you should not specify the platform to built it natively for ARM to massively increase the performance of the application
 
 ## Deploy to GCP using Cloud Run
 
