@@ -14,21 +14,25 @@
   streamlit run app.py
   ```
 
+- Note: This app uses "tesseract" for OCR. You need to [install the executable](https://tesseract-ocr.github.io/tessdoc/Installation.html) as well as the python package in order to run it successfully.
+
 ## Dockerize application
 
-If you plan to run the docker container locally you have to remove the following option:
-
-```shell
---server.enableCORS false
-```
-
 - Build the docker image
+
+  x86:
 
   ```shell
   docker build -t my-streamlit-app .
   ```
 
-- Run the docker container
+  Apple silicon:
+
+  ```shell
+  docker build --platform linux/amd64 -t my-streamlit-app .
+  ```
+
+- Run the docker container (optional)
   ```shell
   docker run -p 8080:8080 my-streamlit-app
   ```

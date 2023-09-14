@@ -1,3 +1,9 @@
 streamlit
 openai
 Wikipedia-API
+pdfplumber
+pdf2image
+numpy
+pandas
+opencv-python
+pytesseract
