@@ -87,7 +87,7 @@ def ask_gpt(api_key, kwargs):
 
 
 def read_pdf(feature, api_key, start_time, file, length, simplify, language, inp_language):
-    pdf_lang = st.radio("Choose the language of your pdf document", ["German", "English"])
+    pdf_lang = inp_language
     with pdfplumber.open(file) as pdf:
         page_count = len(pdf.pages)
         if page_count == 1:
@@ -103,7 +103,7 @@ def read_pdf(feature, api_key, start_time, file, length, simplify, language, inp
             pdf_end_page = st.number_input(f"Choose your end page between {pdf_start_page} and {page_count}", pdf_start_page, page_count, value=pdf_start_page)
         if st.button("Start"):
             content = extract_pdf_text(pdf, int(pdf_start_page), int(pdf_end_page), file, pdf_lang)
-            handle_button_click(feature, api_key, start_time, content, length, simplify, language)
+            handle_button_click(feature, api_key, start_time, content, length, simplify, language, inp_language)
 
 
 def extract_pdf_text(pdf, start, end, file, pdf_lang):
