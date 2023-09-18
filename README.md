@@ -64,7 +64,9 @@ For more detailed instructions check out this [tutorial](https://github.com/Dani
   gcloud run deploy my-streamlit-app \
   --image europe-west3-docker.pkg.dev/propane-nomad-396712/cloud-run/my-streamlit-app \
   --platform managed \
-  --allow-unauthenticated
+  --allow-unauthenticated \
+  --memory=8Gi \
+  --cpu=4
   ```
 
 - You can retrieve the url at any time with this command
